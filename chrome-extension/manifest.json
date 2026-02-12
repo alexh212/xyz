@@ -1,0 +1,34 @@
+{
+  "manifest_version": 3,
+  "name": "AI PR Review Assistant",
+  "description": "Analyze GitHub pull requests and surface AI-generated review feedback.",
+  "version": "0.2.0",
+  "action": {
+    "default_title": "AI PR Review"
+  },
+  "permissions": [
+    "storage",
+    "activeTab",
+    "scripting"
+  ],
+  "host_permissions": [
+    "https://github.com/*",
+    "http://localhost:5000/*"
+  ],
+  "background": {
+    "service_worker": "background/service-worker.js",
+    "type": "module"
+  },
+  "content_scripts": [
+    {
+      "matches": [
+        "https://github.com/*/pull/*",
+        "https://github.com/*/*/pull/*"
+      ],
+      "js": [
+        "content/content.js"
+      ],
+      "run_at": "document_idle"
+    }
+  ]
+}
